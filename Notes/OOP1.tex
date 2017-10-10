@@ -1,0 +1,109 @@
+\documentclass[12pt, a4paper, oneside]{article}
+\usepackage[margin=2cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{lipsum}
+\usepackage{lastpage}
+\usepackage{secdot}
+\usepackage{minted}
+\usepackage{parskip}  
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+
+% Definitionen auf neuer Zeile
+\setdescription{labelsep=\textwidth}
+ 
+% Define 'variables'
+\newcommand{\noteDate}{2017-09-18}
+\newcommand{\subjectIdentifier}{BTI7051 OOP1}
+\newcommand{\subject}{Objektorientierte Programmierung 1} 
+\newcommand{\lectionWeek}{Woche 1}
+
+% Set header and footer content
+\pagestyle{fancy} 
+\fancyhead[L]{Severin Kaderli} 
+\fancyhead[C]{\subject{}}
+\fancyhead[R]{\noteDate{}}
+\fancyfoot[C]{}
+\fancyfoot[R]{Seite \thepage{} von \pageref{LastPage}}
+
+% Adjust width of header and footer line
+\renewcommand{\headrulewidth}{1pt}
+\renewcommand{\footrulewidth}{1pt}
+
+% Move title up and don't show date
+\title{\vspace{-1.5cm}\subjectIdentifier{}\\\subject{}\\\lectionWeek{}}
+\author{\vspace{-1.5cm}}
+\date{\vspace{-1.5cm}}
+
+\begin{document}
+\maketitle
+\thispagestyle{fancy}
+
+% Actual content
+\section{Modulinformationen}
+{\bf Dozenten}: Rolf Hänni, Andreas Scheidegger
+
+{\bf Kursbuch (optional)}: Big Java
+
+{\bf Kursunterlagen}: \\ https://www.dropbox.com/sh/l9xfvou1eleqs8i/AABiNV4jioknK72vs4vvDf0Pa?dl=0
+
+{\bf Webseiten}:
+\begin{itemize}
+    \item http://codingbat.com/java
+    \item http://progressor.ti.bfh.ch/language/java
+\end{itemize}
+\subsection{Zwischenprüfung}
+Die Zwischenprüfung wird auf CodingBat stattfinden.
+
+\section{Einleitung}
+\subsection{Generelle Konzepte}
+Damit sie eine Aufgabe lösen können, müssen Computer zuerst programmiert werden.
+Ein Algorithmus ist eine Schritt-für-Schritt Prozedur um ein Problem in einer Finiten Zeit zu lösen. Die meisten Algorithmen nehmen einen "Input" und erstellen damit schlussendlich einen "Output". Dabei hängt die Laufzeit des Algorithmus von der Input-Grösse ab.
+
+Damit man einen Algorithmus auf einem PC ausführen kann, muss dieser in einer Programmiersprache umgesetzt werden. Diesen Vorgang nennt man programmieren.
+
+\subsection{Problems}
+\begin{description}
+    \item[Feasible problems] Can be solved by an algorithm efficiently.\\
+    $\rightarrow$ Examples: Sorting a list, draw a line between two points
+    \item[Computable problems] Can be solved by an algorithm, but not efficiently.\\
+    $\rightarrow$ Examples: Finding the sortest solution for large sliding puzzles.
+    \item[Undecidable problems] Cannot be solved by an algorithm\\
+    $\rightarrow$ Examples: For a given program and an input, decide whether the program finishes running or will run forever (halting problem)
+\end{description}
+
+
+\subsection{Programmiersprachen}
+Die meisten Programmiersprachen erlauben es einem Menschen einen Computer zu programmieren. Die meisten Programmiersprachen sind textbasiert. Dabei ist eine Programmiersprache aus dem Syntax und der Semantik aufgebaut.
+
+\begin{description}
+    \item[Syntax] Beschreibt die erlaubten Zeichen und andere Regeln für ein Programm. Bestimmt, ob ein Programm korrekt ist. Die syntaktische Analyse nennt man "parsing".
+    \item[Semantik] Ordnet den Zeichen und Befehlen einer Sprache eine Bedeutung zu und bestimmt das Resultat eines Programmes.
+\end{description}
+
+\subsubsection{Low-Level vs. High-Level Language}
+\begin{description}
+    \item[Machine Code] Basis Instruktionen, welche vom CPU ausgeführt werden. Nicht für Menschen gedacht, da es nur eine Sequenz von Zahlen oder Bytes ist.
+    \item[Assembly Language] Lesbare Varante des Maschinen Codes für den Menschen. Der Assembly Code muss aber zuerst zu Maschinen Code kompiliert werden bevor er ausgeführt werden kann. Die Syntax und Semantik des Maschinen Code hängt vom Prozessor ab.
+    \item[High-Level Language] Starke Abstrahierung für eine einfache Lesbarkeit. Wird entweder kompiliert und interpretiert.
+\end{description}
+
+\subsubsection{Compiler vs. Interpreter}
+\begin{description}
+    \item[Compiler] Übersetzt ein "higher-level" Programm in ein "lower-level" Programm. Das endgültige Ziel ist der Maschinen Code.
+    \item[Interpreter] Wird sofort ausgeführt. Bei einem Problem wird die Ausführung abgebrochen. Läuft meistens langsamer als ein kompiliertes Programm.
+    \item[Kobination] Sprachen wie Java werden zu erst zu einem Byte-Code compiliert, welcher dann von der JVM interpretiert wird.
+\end{description}
+
+\subsubsection{Paradigmen}
+\begin{description}
+    \item[Prozedural] Ein Programm besteht aus verschiedenen Prozeduren.
+    \item[Objektorientiert] Ein Programm ist eine Sammlung von interagierenden Objekten.
+    \item[Funktional] Ein Programm ist eine Sequenz von zustandslosen Funktionsaufrufen.
+    \item[Logisch] Ein Programm deklariert eine Sammlung von logischen Ausdrücken.
+\end{description}
+
+\subsection{Java}
+ Java wurde von Sun Microsystems im Jahre 1996 veröffentlicht. Java ist eine Programmiersprache, welche stark objektorientiert ist. Ein wichtiger Punkt von Java ist die Plattformunabhängigkeit ("Write once, run everywhere"). Die neuste Version von Java, die Version 9.0 ist am 21. September 2017 erschienen.
+
+\end{document}
