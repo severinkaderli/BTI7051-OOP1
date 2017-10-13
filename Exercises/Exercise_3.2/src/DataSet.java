@@ -4,10 +4,9 @@ import java.util.List;
 
 public class DataSet {
     /**
-     * List of the values.
+     * The number of values.
      */
-    private List<Integer> values;
-
+    private int count;
     /**
      * The sum of the values.
      */
@@ -32,11 +31,20 @@ public class DataSet {
      *
      */
     public DataSet() {
-        this.values = new ArrayList<>();
         this.sum = 0;
         this.average = 0;
-        this.max = 0;
-        this.min = 0;
+        this.count = 0;
+        this.max = Integer.MIN_VALUE;
+        this.min = Integer.MAX_VALUE;
+    }
+
+    /**
+     * Return the number of values in the dataset.
+     *
+     * @return The number of values
+     */
+    public int getCount() {
+        return this.count;
     }
 
     /**
@@ -45,21 +53,11 @@ public class DataSet {
      * @param x The value to be added
      */
     public void addValue(int x) {
-        this.values.add(x);
-
-        this.calculateSum();
+        this.sum += x;
+        this.count++;
         this.calculateAverage();
-        this.calculateMax();
-        this.calculateMin();
-    }
-
-    /**
-     * Calculate the current sum.
-     */
-    private void calculateSum() {
-        this.sum = 0;
-
-        this.values.forEach(value -> this.sum += value);
+        this.calculateMax(x);
+        this.calculateMin(x);
     }
 
     /**
@@ -75,7 +73,7 @@ public class DataSet {
      * Calculate the current average.
      */
     private void calculateAverage() {
-        this.average = (double) this.getSum() / this.values.size();
+        this.average = (double) this.getSum() / this.getCount();
     }
 
     /**
@@ -89,9 +87,13 @@ public class DataSet {
 
     /**
      * Calculates the current max value.
+     *
+     * @param x The newly added number
      */
-    private void calculateMax() {
-        this.max = Collections.max(this.values);
+    private void calculateMax(int x) {
+        if(x > this.max) {
+            this.max = x;
+        }
     }
 
     /**
@@ -105,9 +107,13 @@ public class DataSet {
 
     /**
      * Calculates the current min value.
+     *
+     * @param x The newly added number
      */
-    private void calculateMin() {
-        this.min = Collections.min(this.values);
+    private void calculateMin(int x) {
+        if(x < this.min) {
+            this.min = x;
+        }
     }
 
     /**

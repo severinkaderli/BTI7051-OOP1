@@ -109,8 +109,14 @@ public class RationalNumber {
      *
      * @return The fraction string
      */
+    @Override
     public String toString() {
-        return numerator + "/" + denominator;
+        if(this.denominator == 1) {
+            return String.valueOf(this.numerator);
+        } else {
+            return this.numerator + "/" + this.denominator;
+        }
+
     }
 
     /**

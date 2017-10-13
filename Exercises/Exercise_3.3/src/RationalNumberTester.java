@@ -16,5 +16,7 @@ public class RationalNumberTester {
         number = new RationalNumber(325);
         System.out.println("Expected string: 325/1, Got: " + number.toString());
         System.out.println("Expected double: 325.0, Got: " + number.toDouble());
+
+        System.out.println(number);
     }
 }
