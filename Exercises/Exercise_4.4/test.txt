@@ -1,0 +1,5 @@
+lorem  ipsum dolor
+sit amet
+Third Line
+The End
+the new file content

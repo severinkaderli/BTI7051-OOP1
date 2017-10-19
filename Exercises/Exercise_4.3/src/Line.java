@@ -27,12 +27,12 @@ public class Line {
     /**
      * Constructs a line using to points on the line.
      *
-     * @param point The first point on the line
+     * @param point       The first point on the line
      * @param secondPoint The second point on the line
      */
-    public Line (Point point, Point secondPoint) {
+    public Line(Point point, Point secondPoint) {
         // Check if the line is vertical
-        if(point.x == secondPoint.x) {
+        if (point.x == secondPoint.x) {
             this.m = Double.POSITIVE_INFINITY;
             this.b = 0;
             this.x = point.x;
@@ -48,9 +48,9 @@ public class Line {
      * Construct a line using a point and the slope of the line.
      *
      * @param point A point on the line
-     * @param m The slope of the line
+     * @param m     The slope of the line
      */
-    public Line (Point point, int m) {
+    public Line(Point point, double m) {
         this.b = point.y - m * point.x;
         this.m = m;
         this.x = 0;
@@ -117,7 +117,7 @@ public class Line {
         return (this.m == otherLine.m);
     }
 
-
+    // TODO: Implement this method
     public boolean intersects(Line otherLine) {
         return true;
     }
