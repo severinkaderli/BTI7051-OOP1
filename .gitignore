@@ -2,3 +2,7 @@
 *.log
 _minted-OOP1/
 *.class
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/dictionaries
+*.iws
