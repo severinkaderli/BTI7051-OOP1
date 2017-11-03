@@ -7,6 +7,12 @@ import java.util.Random;
  * @author Severin Kaderli
  */
 public class RoulettePlayer {
+
+    /**
+     * The winning chance of the strategy.
+     */
+    public static final double WIN_CHANCE = 18.0 / 37.0;
+
     /**
      * Total number of tries so far.
      */
@@ -66,15 +72,15 @@ public class RoulettePlayer {
      */
     public boolean playBlack(int amount) {
         Random random = new Random();
+        this.balance -= amount;
 
         // Check if we won with a 18/37 change
-        if (random.nextInt(37) < 18) {
+        if (random.nextDouble() < WIN_CHANCE) {
             this.balance += 2 * amount;
             return true;
-        } else {
-            this.balance -= amount;
-            return false;
         }
+
+        return false;
     }
 
     /**
