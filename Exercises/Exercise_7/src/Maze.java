@@ -39,6 +39,10 @@ public class Maze {
                         elementMaze[row][field] = new Wall(field * Constants.UNIT, row * Constants.UNIT);
                         break;
 
+                    case 2:
+                        elementMaze[row][field] = new Pellet(field * Constants.UNIT, row * Constants.UNIT);
+                        break;
+
                     default:
                         elementMaze[row][field] = new Floor(field * Constants.UNIT, row * Constants.UNIT);
                         break;
@@ -71,8 +75,7 @@ public class Maze {
 
     }
 
-    public boolean intersects(Pacman pacman) {
-        Rectangle2D rect = new Rectangle2D();
-        rect.intersects();
+    public GameElement[][] getMaze() {
+        return maze;
     }
 }

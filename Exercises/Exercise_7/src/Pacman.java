@@ -1,49 +1,62 @@
-
-
+import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.ArcType;
 
-public class Pacman {
+public class Pacman extends Entity {
+    /**
+     * The color of pacman
+     */
 	private static final Color PACMAN_COLOR = Color.YELLOW;
-	private int x, y;
-	private Direction direction = Direction.RIGHT;
 
-	public Pacman(int x, int y) {
-		this.x = x;
-		this.y = y;
+    /**
+     * Create a new instance of pacman.
+     *
+     * @param x The x position
+     * @param y The y position
+     * @param maze The maze
+     */
+	public Pacman(int x, int y, Maze maze) {
+		super(x, y, maze);
+		this.setDirection(Direction.RIGHT);
 	}
 
-	public void paint(GraphicsContext context) {
+    /**
+     * Draw pacman on the graphics context.
+     *
+     * @param context The graphics context
+     */
+	public void draw(GraphicsContext context) {
 		context.setFill(PACMAN_COLOR);
 		context.fillArc(x, y, Constants.UNIT, Constants.UNIT, this.getDirection().ordinal() * 90 + 30, 300, ArcType.ROUND);
 	}
-	
-	public void move(Maze maze) {
-	    if(maze.intersects(this)) {
-	        return;
-        }
+
+    /**
+     * Move pacman
+     */
+	public void move() {
+	    int oldX = this.x;
+	    int oldY = this.y;
+
 		switch(this.direction) {
-		case RIGHT:
-			x += Constants.UNIT / 6;
-			break;
-		case UP:
-			y -= Constants.UNIT / 6;
-			break;
-		case LEFT:
-			x -= Constants.UNIT / 6;
-			break;
-		case DOWN:
-			y += Constants.UNIT / 6;
-			break;
+			case RIGHT:
+				this.x += Constants.UNIT / 6;
+				break;
+			case UP:
+				this.y -= Constants.UNIT / 6;
+				break;
+			case LEFT:
+				this.x -= Constants.UNIT / 6;
+				break;
+			case DOWN:
+				this.y += Constants.UNIT / 6;
+				break;
 		}
-	}
 
-	public Direction getDirection() {
-		return direction;
-	}
-
-	public void setDirection(Direction direction) {
-		this.direction = direction;
+		this.updateHitbox();
+		if(this.collidesWith(Wall.class)) {
+            this.x = oldX;
+            this.y = oldY;
+        }
 	}
 }

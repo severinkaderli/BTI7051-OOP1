@@ -3,7 +3,6 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -13,17 +12,19 @@ public class Main extends Application {
      * The configuration for the maze.
      */
     private int[][] mazeConfiguration = {
-            {1, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 3, 4, 5, 3},
+            {1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 3, 4, 5, 3},
             {1, 0, 0, 0, 1, 0, 1, 0, 1, 1},
             {1, 0, 0, 0, 1, 0, 1, 0, 1, 1},
+            {1, 0, 0, 0, 0, 0, 0, 0, 1, 1},
+            {1, 0, 2, 0, 1, 0, 1, 0, 1, 1},
             {1, 0, 0, 0, 1, 0, 1, 0, 1, 1},
-            {1, 0, 0, 0, 1, 0, 1, 0, 1, 1},
-            {1, 0, 0, 0, 1, 0, 1, 0, 1, 1},
-            {1, 0, 0, 0, 1, 0, 1, 0, 1, 1},
-            {0, 1, 1, 1, 1, 1, 1, 0, 0, 0}
+            {1, 0, 0, 0, 0, 0, 0, 0, 1, 1},
+            {1, 1, 1, 1, 1, 1, 1, 0, 0, 0}
     };
 
     private long oldTime;
+
+    private int score;
 
     @Override
     public void start(Stage primaryStage) {
@@ -35,12 +36,14 @@ public class Main extends Application {
             primaryStage.setScene(scene);
             primaryStage.show();
 
+            // Create a new maze object based on the given configuration array
             Maze maze = new Maze(mazeConfiguration);
+
             // Set the dimensions of the canvas based on the maze.
             canvas.setWidth(maze.getWidth() * Constants.UNIT);
             canvas.setHeight(maze.getHeight() * Constants.UNIT);
 
-            Pacman pacman = new Pacman(5 * Constants.UNIT, 5 * Constants.UNIT);
+            Pacman pacman = new Pacman(5 * Constants.UNIT, 5 * Constants.UNIT, maze);
             GraphicsContext context = canvas.getGraphicsContext2D();
 
             // Keyboard controls
@@ -70,11 +73,10 @@ public class Main extends Application {
                 public void handle(long now) {
                     if(now > oldTime + (1_000_000_000 / 60)) {
                         oldTime = now;
-                        System.out.println(now);
                         pacman.move();
                         context.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                         maze.draw(context);
-                        pacman.paint(context);
+                        pacman.draw(context);
                     }
 
                 }
