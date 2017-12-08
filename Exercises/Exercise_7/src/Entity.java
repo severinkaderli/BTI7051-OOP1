@@ -1,3 +1,5 @@
+import java.awt.*;
+
 abstract class Entity extends GameElement {
     /**
      * The maze which the entity belongs to.
@@ -12,12 +14,12 @@ abstract class Entity extends GameElement {
     /**
      * Create a new instance of the entity.
      *
-     * @param x    The x position
-     * @param y    The y position
+     * @param position The position
      * @param maze The maze
      */
-    public Entity(int x, int y, Maze maze) {
-        super(x, y);
+    public Entity(Point position, Maze maze) {
+        super(position);
+        this.type = Type.ENTITY;
         this.maze = maze;
     }
 
@@ -39,25 +41,6 @@ abstract class Entity extends GameElement {
         this.direction = direction;
     }
 
-    /**
-     * Check if the entity collides with an element of the given type.
-     *
-     * @param gameElement The class which to check for.
-     * @return True if there is a collision, false otherwise.
-     */
-    public boolean collidesWith(Class gameElement) {
-        for (GameElement[] row : this.maze.getMaze()) {
-            for (GameElement element : row) {
-                if (gameElement.isInstance(element)) {
-                    if (element.getHitbox().intersects(this.hitbox)) {
-                        return true;
-                    }
-                }
-            }
-        }
-
-        return false;
-    }
 
 
 }
