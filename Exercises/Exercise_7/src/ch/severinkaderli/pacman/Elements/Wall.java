@@ -1,11 +1,13 @@
+package ch.severinkaderli.pacman.Elements;
 
-import javafx.geometry.Rectangle2D;
+import ch.severinkaderli.pacman.Common.Constants;
+import ch.severinkaderli.pacman.Common.Type;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 import java.awt.*;
 
-public class Wall extends GameElement {
+public class Wall extends StaticElement {
 
     private static final Color WALL_COLOR = Color.BLUE;
 
@@ -16,6 +18,6 @@ public class Wall extends GameElement {
 
     public void draw(GraphicsContext context) {
         context.setFill(WALL_COLOR);
-        context.fillRect(this.hitbox.getX() * Constants.UNIT, this.hitbox.getY() * Constants.UNIT, this.hitbox.getWidth(), this.hitbox.getHeight());
+        context.fillRect(this.position.x * Constants.UNIT, this.position.y * Constants.UNIT, Constants.UNIT, Constants.UNIT);
     }
 }

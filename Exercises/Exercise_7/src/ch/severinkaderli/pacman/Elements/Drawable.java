@@ -1,3 +1,5 @@
+package ch.severinkaderli.pacman.Elements;
+
 import javafx.scene.canvas.GraphicsContext;
 
 public interface Drawable {

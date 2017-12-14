@@ -1,6 +1,11 @@
-import java.awt.*;
+package ch.severinkaderli.pacman.Elements;
+
+import ch.severinkaderli.pacman.Common.Type;
 
 public class MazeFactory {
+
+
+
 
     /**
      * Create a new maze object based on the given configuration.
@@ -16,15 +21,26 @@ public class MazeFactory {
         for(int[] row : mazeConfiguration) {
             maze.addRow();
             for(int elementType : row) {
-                switch(elementType) {
-                    case 1:
+
+                switch(Type.valueOf(elementType)) {
+                    case WALL:
                         maze.addWall();
                         break;
 
-                    case 2:
+                    case PELLET:
                         maze.addPellet();
                         break;
 
+                    case POWER_PELLET:
+                        //maze.addPowerPellet();
+                        break;
+
+                    case PACMAN:
+                        maze.addPacman();
+                        break;
+
+
+                    case FLOOR:
                     default:
                         maze.addFloor();
                         break;

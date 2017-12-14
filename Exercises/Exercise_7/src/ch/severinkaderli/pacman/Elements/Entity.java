@@ -1,6 +1,12 @@
+package ch.severinkaderli.pacman.Elements;
+
+import ch.severinkaderli.pacman.Common.Constants;
+import ch.severinkaderli.pacman.Common.Direction;
+import javafx.scene.canvas.GraphicsContext;
+
 import java.awt.*;
 
-abstract class Entity extends GameElement {
+abstract public class Entity extends GameElement {
     /**
      * The maze which the entity belongs to.
      */
@@ -12,6 +18,11 @@ abstract class Entity extends GameElement {
     protected Direction direction;
 
     /**
+     * Move the entity around the maze.
+     */
+    abstract public void move();
+
+    /**
      * Create a new instance of the entity.
      *
      * @param position The position
@@ -19,7 +30,6 @@ abstract class Entity extends GameElement {
      */
     public Entity(Point position, Maze maze) {
         super(position);
-        this.type = Type.ENTITY;
         this.maze = maze;
     }
 
@@ -41,6 +51,9 @@ abstract class Entity extends GameElement {
         this.direction = direction;
     }
 
-
+    public void draw(GraphicsContext context) {
+        context.setFill(Constants.FLOOR_COLOR);
+        context.fillRect(this.position.x * Constants.UNIT, this.position.y * Constants.UNIT, Constants.UNIT, Constants.UNIT);
+    }
 
 }

@@ -1,11 +1,14 @@
+package ch.severinkaderli.pacman.Elements;
+
+import ch.severinkaderli.pacman.Common.Constants;
+import ch.severinkaderli.pacman.Common.Type;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.ArcType;
 
 import java.awt.*;
 
 
-public class Pellet extends GameElement implements Scorable {
+public class Pellet extends StaticElement implements Scorable {
 
     private static final int PELLET_SCORE = 100;
     private static final Color PELLET_COLOR = Color.ORANGE;
@@ -29,7 +32,7 @@ public class Pellet extends GameElement implements Scorable {
      */
     public void draw(GraphicsContext context) {
         context.setFill(Color.BLACK);
-        context.fillRect(this.hitbox.getX() * Constants.UNIT, this.hitbox.getY() * Constants.UNIT, this.hitbox.getWidth(), this.hitbox.getHeight());
+        context.fillRect(this.position.x * Constants.UNIT, this.position.y * Constants.UNIT, Constants.UNIT, Constants.UNIT);
         if (!this.isEaten) {
             context.setFill(PELLET_COLOR);
             int x = this.position.x * Constants.UNIT + Constants.UNIT / 2 - Constants.UNIT / 8;

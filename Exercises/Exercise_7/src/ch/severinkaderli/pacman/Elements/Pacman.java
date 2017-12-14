@@ -1,10 +1,11 @@
+package ch.severinkaderli.pacman.Elements;
 
-import javafx.animation.TranslateTransition;
-import javafx.scene.canvas.GraphicsContext;
+import ch.severinkaderli.pacman.Common.Constants;
+import ch.severinkaderli.pacman.Common.Direction;
+import ch.severinkaderli.pacman.Common.Type;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.ArcType;
-import javafx.util.Duration;
 
 import java.awt.*;
 
@@ -23,7 +24,8 @@ public class Pacman extends Entity {
      */
     public Pacman(Point position, Maze maze) {
         super(position, maze);
-        this.setDirection(Direction.DOWN);
+        this.type = Type.PACMAN;
+        this.setDirection(Direction.RIGHT);
         this.color = Color.YELLOW;
         this.isMoving = false;
     }
@@ -34,6 +36,7 @@ public class Pacman extends Entity {
      * @param context The graphics context
      */
     public void draw(GraphicsContext context) {
+        super.draw(context);
         context.setFill(this.color);
         context.fillArc(position.x * Constants.UNIT, position.y * Constants.UNIT, Constants.UNIT, Constants.UNIT, this.getDirection().ordinal() * 90 + 30, 300, ArcType.ROUND);
     }
@@ -58,8 +61,6 @@ public class Pacman extends Entity {
                 this.position.y++;
                 break;
         }
-
-        this.updateHitbox();
 
         GameElement element = this.maze.getElement(this.position);
 

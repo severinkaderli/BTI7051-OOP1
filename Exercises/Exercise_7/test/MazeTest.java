@@ -1,3 +1,5 @@
+import ch.severinkaderli.pacman.Elements.Maze;
+import ch.severinkaderli.pacman.Elements.MazeFactory;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

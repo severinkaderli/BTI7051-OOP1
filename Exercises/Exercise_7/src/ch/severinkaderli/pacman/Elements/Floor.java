@@ -1,10 +1,12 @@
-import javafx.geometry.Rectangle2D;
+package ch.severinkaderli.pacman.Elements;
+
+import ch.severinkaderli.pacman.Common.Constants;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 import java.awt.*;
 
-public class Floor extends GameElement {
+public class Floor extends StaticElement {
     private static final Color FLOOR_COLOR = Color.BLACK;
 
     public Floor(Point position) {
@@ -13,7 +15,7 @@ public class Floor extends GameElement {
 
     public void draw(GraphicsContext context) {
         context.setFill(FLOOR_COLOR);
-        context.fillRect(this.hitbox.getX() * Constants.UNIT, this.hitbox.getY() * Constants.UNIT, this.hitbox.getWidth(), this.hitbox.getHeight());
+        context.fillRect(this.position.x * Constants.UNIT, this.position.y * Constants.UNIT, Constants.UNIT, Constants.UNIT);
 
     }
 }

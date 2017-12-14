@@ -1,5 +1,9 @@
+package ch.severinkaderli.pacman;
+
+import ch.severinkaderli.pacman.Common.Constants;
+import ch.severinkaderli.pacman.Common.Direction;
+import ch.severinkaderli.pacman.Elements.*;
 import javafx.animation.AnimationTimer;
-import javafx.animation.TranslateTransition;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -7,20 +11,13 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Game extends Application {
-    /**
-     * The refresh rate of the game.
-     */
-    private static final double FPS = 1_000_000_000 / 60;
-
     /**
      * The configuration for the maze.
      */
@@ -30,7 +27,7 @@ public class Game extends Application {
             {1, 2, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 2, 1},
             {1, 2, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 2, 1},
             {1, 2, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 2, 1},
-            {2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2}
+            {2, 2, 2, 4, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2}
     };
 
     private long oldTime;
@@ -40,12 +37,17 @@ public class Game extends Application {
      */
     private long score;
 
+    private Canvas canvas;
+
     /**
      * List of all drawables elements in the game.
      */
-    private List<Drawable> drawables;
+    private List<StaticElement> staticElements;
 
-    private Canvas canvas;
+    /**
+     * List of all movable elements in the game.
+     */
+    private List<Entity> entities;
 
     /**
      * Draw all drawable elements on the screen.
@@ -54,10 +56,16 @@ public class Game extends Application {
      */
     private void render(GraphicsContext context) {
         // Clear the canvas
-        context.setFill(Color.GREY);
+        context.setFill(Constants.FLOOR_COLOR);
         context.fillRect(0, 0, this.canvas.getWidth(), this.canvas.getHeight());
 
-        for (Drawable element : this.drawables) {
+        // Draw static elements
+        for (Drawable element : this.staticElements) {
+            element.draw(context);
+        }
+
+        // Draw entities
+        for (Drawable element : this.entities) {
             element.draw(context);
         }
 
@@ -65,29 +73,25 @@ public class Game extends Application {
         context.fillText("Score: " + this.score, 0, 10);
     }
 
-    private void moveElements() {
-        this.pacman.move();
+    /**
+     * Move all entities.
+     */
+    private void moveEntities() {
+        for(Entity entity : this.entities) {
+            entity.move();
+        }
     }
 
     /**
-     * The object for the maze.
+     * Initialize all game elements so they are ready when the game
+     * starts.
      */
-    private Maze maze;
-
-    /**
-     * The player character.
-     */
-    private Pacman pacman;
-
-
     private void initializeGameElements() {
         MazeFactory mazeFactory = new MazeFactory();
-        this.maze = mazeFactory.buildMaze(Game.MAZE_CONFIGURATION);
-        this.pacman = new Pacman(new Point(1, 2), this.maze);
+        Maze maze = mazeFactory.buildMaze(Game.MAZE_CONFIGURATION);
 
-        this.drawables = new ArrayList<Drawable>();
-        this.drawables.add(this.maze);
-        this.drawables.add(this.pacman);
+        this.staticElements = maze.getStaticElements();
+        this.entities = maze.getEntities();
     }
 
     @Override
@@ -112,14 +116,14 @@ public class Game extends Application {
             primaryStage.sizeToScene();
 
 
-            primaryStage.setTitle("Pacman");
+            primaryStage.setTitle("ch.severinkaderli.pacman.Elements.Pacman");
 
 
             GraphicsContext context = canvas.getGraphicsContext2D();
 
             // Keyboard controls
             scene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
-                switch (key.getCode()) {
+                /*switch (key.getCode()) {
                     case UP:
                         pacman.setDirection(Direction.UP);
                         break;
@@ -134,7 +138,7 @@ public class Game extends Application {
                         break;
                     default:
                         break;
-                }
+                }*/
             });
 
 
@@ -142,9 +146,9 @@ public class Game extends Application {
             AnimationTimer animation = new AnimationTimer() {
 
                 public void handle(long now) {
-                    if (now > oldTime + Game.FPS) {
+                    if (now > oldTime + Constants.FPS) {
                         oldTime = now;
-                        Game.this.moveElements();
+                        Game.this.moveEntities();
                         Game.this.render(context);
                     }
                 }

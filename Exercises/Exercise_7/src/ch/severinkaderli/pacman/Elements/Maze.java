@@ -1,3 +1,6 @@
+package ch.severinkaderli.pacman.Elements;
+
+import ch.severinkaderli.pacman.Common.Type;
 import javafx.scene.canvas.GraphicsContext;
 
 import java.awt.*;
@@ -17,9 +20,19 @@ public class Maze implements Drawable {
     private int colPointer;
 
     /**
-     * The elements of the maze
+     * The maze as a multi dimensional list of game elements.
      */
     private List<List<GameElement>> maze;
+
+    /**
+     * List of all static game elements in the maze.
+     */
+    private List<StaticElement> staticElements;
+
+    /**
+     * List of all entities in the maze.
+     */
+    private List<Entity> entities;
 
     /**
      * Set the row and col pointer to the default values.
@@ -28,6 +41,8 @@ public class Maze implements Drawable {
         this.rowPointer = -1;
         this.colPointer = 0;
         this.maze = new ArrayList<>();
+        this.entities = new ArrayList<>();
+        this.staticElements = new ArrayList<>();
     }
 
     /**
@@ -54,6 +69,9 @@ public class Maze implements Drawable {
         return this.maze.size();
     }
 
+    public List<Entity> getEntities() {return this.entities; }
+    public List<StaticElement> getStaticElements() {return this.staticElements; }
+
     /**
      * Increase the row pointer and create a new ArrayList at that position.
      * This also resets the col pointer back to 0.
@@ -64,19 +82,56 @@ public class Maze implements Drawable {
         this.colPointer = 0;
     }
 
+    /**
+     * Adds the given element to the current row and increments the
+     * col pointer by one.
+     *
+     * @param element The element that should be added.
+     */
+    private void addElement(GameElement element) {
+        this.maze.get(rowPointer).add(colPointer, element);
+        this.colPointer++;
+    }
+
+    private void addStaticElement(StaticElement element) {
+        this.addElement(element);
+        this.staticElements.add(element);
+    }
+
+    private void addEntity(Entity element) {
+        this.addElement(element);
+        this.entities.add(element);
+    }
+
+    /**
+     * Adds a wall to the current row.
+     */
     public void addWall() {
-        this.maze.get(rowPointer).add(colPointer, new Wall(new Point(colPointer, rowPointer)));
-        this.colPointer++;
+        this.addStaticElement(new Wall(new Point(colPointer, rowPointer)));
     }
 
+    /**
+     * Adds a floor to the current row.
+     */
     public void addFloor() {
-        this.maze.get(rowPointer).add(colPointer, new Floor(new Point(colPointer, rowPointer)));
-        this.colPointer++;
+        this.addStaticElement(new Floor(new Point(colPointer, rowPointer)));
     }
 
+    /**
+     * Adds a pellet to the current row.
+     */
     public void addPellet() {
-        this.maze.get(rowPointer).add(colPointer, new Pellet(new Point(colPointer, rowPointer)));
-        this.colPointer++;
+        this.addStaticElement(new Pellet(new Point(colPointer, rowPointer)));
+    }
+
+    public void addPacman() {
+        this.addEntity(new Pacman(new Point(colPointer, rowPointer), this));
+    }
+
+    public void addGhost(Type type) {
+        /*Ghost ghost = new Ghost(new Point(colPointer, rowPointer), this, Type.CLYDE);
+        this.addElement(pacman);
+        this.entities.add(ghost);*/
     }
 
     /**
